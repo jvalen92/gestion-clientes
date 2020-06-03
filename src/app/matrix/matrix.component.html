@@ -1,0 +1,56 @@
+<form #projectForm="ngForm" (ngSubmit)="onSubmit()">
+
+    <p>
+        <label for="empleados">Empleados</label>
+        <input type="number" name="empleados" #empleados="ngModel" [(ngModel)]="formulario.empleados" required />
+        <span *ngIf="!empleados.touched && !empleados.valid">Entrada no valida</span>
+    </p>
+
+    <p>
+        <label for="meses">Meses</label>
+        <input type="number" name="meses" #meses="ngModel" [(ngModel)]="formulario.meses" required>
+        <span *ngIf="!meses.touched && !meses.valid">Entrada no valida</span>
+    </p>
+
+    <input type="submit" value="Enviar" [disabled]="!projectForm.form.valid">
+
+
+</form>
+
+<div *ngIf="flag; else errorForm">
+    <table>
+        <tr>
+            <th>ID_Empleado</th>
+            <th>Edad</th>
+            <th>Cargo</th>
+            <th>Salario</th>
+            <th>Meses</th>
+            <th>Total a Pagar</th>
+        </tr>
+
+        <tr *ngFor="let empleado of showEmpleados">
+            <td>{{empleado.id}}</td>
+            <td>{{empleado.edad}}</td>
+            <td>{{empleado.cargo}}</td>
+            <td>{{empleado.salario}}</td>
+            <td>{{formulario.meses}}</td>
+            <td>{{empleado.pagoTotal}}</td>
+            <button (click)="updateForm(empleado)" >Editar </button>
+        </tr>
+    </table>
+
+    <h2>El pago promedio es: {{promedio}} </h2>
+
+</div>
+
+
+
+
+
+
+
+<ng-template #errorForm>
+    <div class="error">
+        <h2>Por favor ingrese numeros positivos</h2>
+    </div>
+</ng-template>
